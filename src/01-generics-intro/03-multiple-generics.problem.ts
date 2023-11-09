@@ -1,7 +1,22 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
-const returnBothOfWhatIPassIn = (a: unknown, b: unknown) => {
+/**
+ * 오답
+ */
+{
+  const returnBothOfWhatIPassIn = (a: unknown, b: unknown) => {
+    return {
+      a,
+      b,
+    };
+  };
+}
+
+/**
+ * 정답
+ */
+const returnBothOfWhatIPassIn = <A, B>(a: A, b: B) => {
   return {
     a,
     b,
