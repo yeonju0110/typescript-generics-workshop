@@ -1,9 +1,22 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
+/**
+ * 변경 전
 const createClassNamesFactory =
   (classes: unknown) =>
   (type: unknown, ...otherClasses: unknown[]) => {
+    const classList = [classes[type], ...otherClasses];
+    return classList.join(" ");
+  };
+ */
+
+/**
+ * 변경 후
+ */
+const createClassNamesFactory =
+  <TVariant extends string>(classes: Record<TVariant, string>) =>
+  (type: TVariant, ...otherClasses: string[]) => {
     const classList = [classes[type], ...otherClasses];
     return classList.join(" ");
   };

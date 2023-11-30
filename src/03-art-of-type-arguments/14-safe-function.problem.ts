@@ -1,6 +1,8 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
+/**
+ * 변경 전
 const makeSafe =
   (func: unknown) =>
   (
@@ -9,6 +11,38 @@ const makeSafe =
     | {
         type: "success";
         result: unknown;
+      }
+    | {
+        type: "failure";
+        error: Error;
+      } => {
+    try {
+      const result = func(...args);
+
+      return {
+        type: "success",
+        result,
+      };
+    } catch (e) {
+      return {
+        type: "failure",
+        error: e as Error,
+      };
+    }
+  };
+  */
+
+/**
+ * 변경 후
+ */
+const makeSafe =
+  <TParams extends any[], TReturn>(func: (...args: TParams) => TReturn) =>
+  (
+    ...args: TParams
+  ):
+    | {
+        type: "success";
+        result: TReturn;
       }
     | {
         type: "failure";
@@ -52,7 +86,7 @@ it("Should return the result with a { type: 'success' } on a successful call", (
             error: Error;
           }
       >
-    >,
+    >
   ];
 });
 
@@ -84,7 +118,7 @@ it("Should return the error on a thrown call", () => {
             error: Error;
           }
       >
-    >,
+    >
   ];
 });
 
